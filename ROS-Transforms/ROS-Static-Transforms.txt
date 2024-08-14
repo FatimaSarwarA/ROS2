@@ -1,0 +1,21 @@
+1. Open first window:
+- source /opt/ros/humble/setup.bash
+- ros2 run tf2_ros static_transform_publisher 2 1 0 0.785 0 0 world robot_1
+
+(Performing static transform from world to parent with 45 degree rotation) (Translation goes first and then rotation in radians)
+
+2. Open second Ubuntu 22.04 window 
+- source /opt/ros/humble/setup.bash
+- fros2 run tf2_ros static_transform_publisher 1 0 0 0 0 0 robot_1 robot_2
+
+(Performing static transform from (parent to child)
+
+3. Open third Ubuntu window and run rviz (visualization tool)
+- source /opt/ros/humble/setup.bash
+- ros2 run rviz2 rviz2
+
+Repeat steps for 90 degree 
+- ros2 run tf2_ros static_transform_publisher 2 1 0 1.57 0 0 world robot_1
+
+
+You can run these .rviz files by opening Ubuntu 22.04 
