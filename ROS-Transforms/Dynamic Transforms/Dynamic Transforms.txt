@@ -1,0 +1,60 @@
+Dynamic Transforms
+
+To perform dynamic transforms, install these packages
+- Xacro
+- Joint State Publisher GUI
+(Apparently installed in our method)
+
+Note: URDF file consists of Links (rigid components) connected by joints (defines relationship between different components) 
+This is similar to transforms as they consist of frames linked by transforms
+
+A ROS node "robot_state_publisher" takes in a URDF file and broadcasts all the transforms from it.
+
+Joints can be 
+- Fixed (Static Transform)
+- Continuous/Limited Rotation - Linear Motion (Dynamic Transform) (This needs real-time values) (/joint_states does the work)
+
+/joint_states does the by taking real time values. But we will fake them using "joint_state_publisher_gui" 
+
+- This will look at the robot description showed by robot_state_publisher, scan through the URDF, see which joints can be moved and show a slider for them, take the values of the slider and publish them as joint states	 
+
+- "robot_state_publisher" takes the URDF file through "robot_description"
+
+Step 1: Copy the example URDF file in your WSL environment. For this procedure, it was pasted in:
+
+- \\wsl.localhost\Ubuntu-22.04\home\fatima
+
+Step 2: Run the following commands:
+- source /opt/ros/humble/setup.bash
+
+- ros2 run robot_state_publisher robot_state_publisher --ros-args -p robot_description:="$(xacro /home/fatima/example_robot.urdf.xacro)"
+
+Step 3: New command window and run this:
+
+- ros2 run joint_state_publisher_gui joint_state_publisher_gui
+
+(JSPgui.png)
+
+
+Step 4: Launch rvis2 in another command line
+
+(DT.png)
+
+Step 5: Since the example URDF file has a robot model. You can view it by "Add" + "RobotModel", set the Description Topic to "/robot_description"
+
+(DT_and_RobotModel.png)
+
+TO DEBUGG: ros2 run tf2_tools view_frames.py
+(To make a PDF of frames)
+
+- If this doesn't work, follow steps:
+1. Manually install tf2_tools
+- sudo apt-get install ros-humble-tf2-tools
+2. Check script path
+- ros2 pkg prefix tf2_tools
+3. Find the location of the file:
+- find / -name view_frames.py 2>/dev/null
+4. Run the python script using the location provided
+python3 /opt/ros/humble/lib/python3.10/site-packages/tf2_tools/view_frames.py
+
+(frames.pdf) 
